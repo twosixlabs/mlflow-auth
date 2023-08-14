@@ -5,7 +5,7 @@ from .routes import GET_USERS
 
 class AuthClient(mlflow.server.auth.client.AuthServiceClient):
 
-    def list_users(self, to_json = False):
+    def list_users(self, *, to_json = False):
         """
         List all users.
 
