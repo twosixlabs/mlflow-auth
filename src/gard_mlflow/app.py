@@ -1,4 +1,4 @@
-from flask import Flask, make_response, request
+from flask import Flask, make_response
 from mlflow.server import app
 import mlflow.server.auth
 from mlflow.server.handlers import _get_rest_path, catch_mlflow_exception
@@ -26,9 +26,5 @@ def create_app(app: Flask = app):
 
 @catch_mlflow_exception
 def get_users():
-    content_type = request.headers.get("Content-Type")
-    if content_type == "application/json":
-        users = mlflow.server.auth.store.list_users()
-        return make_response({"users": [u.to_json() for u in users]})
-    else:
-        return make_response(f"Invalid content type: '{content_type}'", 400)
+    users = mlflow.server.auth.store.list_users()
+    return make_response({"users": [u.to_json() for u in users]})
