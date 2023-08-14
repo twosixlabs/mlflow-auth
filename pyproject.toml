@@ -11,6 +11,9 @@ dependencies = [
 [project.entry-points."mlflow.app"]
 gard-mlflow = "gard_mlflow.app:create_app"
 
+[project.entry-points."mlflow.app.client"]
+gard-mlflow = "gard_mlflow.client:AuthClient"
+
 [build-system]
 build-backend = "hatchling.build"
 requires = ["hatchling>=1.10.0"]

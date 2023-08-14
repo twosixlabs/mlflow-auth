@@ -1,10 +1,9 @@
 from flask import Flask, make_response
 from mlflow.server import app
 import mlflow.server.auth
-from mlflow.server.handlers import _get_rest_path, catch_mlflow_exception
+from mlflow.server.handlers import catch_mlflow_exception
 
-
-GET_USERS = _get_rest_path("/mlflow/users")
+from .routes import GET_USERS
 
 
 def create_app(app: Flask = app):
