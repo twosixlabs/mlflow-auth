@@ -22,7 +22,7 @@ class AuthClient(mlflow.server.auth.client.AuthServiceClient):
 
         .. code-block:: python
 
-            from gard_mlflow.client import AuthClient
+            from mlflow_auth.client import AuthClient
 
             client = AuthClient("tracking_uri")
             users = client.list_users()

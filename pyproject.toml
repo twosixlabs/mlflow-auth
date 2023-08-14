@@ -1,18 +1,18 @@
 [project]
 requires-python = ">=3.8"
-name = "gard-mlflow"
+name = "mlflow-auth"
 version = "0.0.1"
-description = "GARD customization of MLFlow"
+description = "Auth extensions to MLFlow"
 
 dependencies = [
     "mlflow"
 ]
 
 [project.entry-points."mlflow.app"]
-gard-mlflow = "gard_mlflow.app:create_app"
+mlflow-auth = "mlflow_auth.app:create_app"
 
 [project.entry-points."mlflow.app.client"]
-gard-mlflow = "gard_mlflow.client:AuthClient"
+mlflow-auth = "mlflow_auth.client:AuthClient"
 
 [build-system]
 build-backend = "hatchling.build"
