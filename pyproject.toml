@@ -5,7 +5,8 @@ version = "0.0.1"
 description = "Auth extensions to MLFlow"
 
 dependencies = [
-    "mlflow"
+    "fire",
+    "mlflow",
 ]
 
 [project.entry-points."mlflow.app"]
@@ -13,6 +14,10 @@ mlflow-auth = "mlflow_auth.app:create_app"
 
 [project.entry-points."mlflow.app.client"]
 mlflow-auth = "mlflow_auth.client:AuthClient"
+
+[project.scripts]
+mlflow-client = "mlflow_auth.cli:client"
+mlflow-auth-client = "mlflow_auth.cli:auth_client"
 
 [build-system]
 build-backend = "hatchling.build"
