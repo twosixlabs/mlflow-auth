@@ -1,6 +1,11 @@
-from flask import Flask
+from flask import Flask, make_response, request
 from mlflow.server import app
 import mlflow.server.auth
+from mlflow.server.handlers import _get_rest_path, catch_mlflow_exception
+
+
+GET_USERS = _get_rest_path("/mlflow/users")
+
 
 def create_app(app: Flask = app):
     # Restrict user creation to admins only
@@ -8,6 +13,22 @@ def create_app(app: Flask = app):
     mlflow.server.auth.BEFORE_REQUEST_VALIDATORS.update({
         (mlflow.server.auth.SIGNUP, "GET"): mlflow.server.auth.validate_can_update_user_admin,
         (mlflow.server.auth.CREATE_USER, "POST"): mlflow.server.auth.validate_can_update_user_admin,
+        (GET_USERS, "GET"): mlflow.server.auth.validate_can_update_user_admin,
     })
     app = mlflow.server.auth.create_app(app)
+    app.add_url_rule(
+        rule=GET_USERS,
+        view_func=get_users,
+        methods=["GET"],
+    )
     return app
+
+
+@catch_mlflow_exception
+def get_users():
+    content_type = request.headers.get("Content-Type")
+    if content_type == "application/json":
+        users = mlflow.server.auth.store.list_users()
+        return make_response({"users": [u.to_json() for u in users]})
+    else:
+        return make_response(f"Invalid content type: '{content_type}'", 400)
